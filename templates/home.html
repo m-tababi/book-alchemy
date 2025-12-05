@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+  </head>
+  <body>
+
+    <h1>My Library</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p style="color: {% if category == 'success' %}green{% else %}red{% endif %};">
+          {{ message }}
+        </p>
+      {% endfor %}
+    {% endwith %}
+
+    <form action="/" method="get">
+      <input type="text" name="search" placeholder="Search books" value="{{ search }}">
+      <button type="submit">Search</button>
+    </form>
+
+    <p>
+      Sort:
+      <a href="/?sort=title&direction=asc">Title ▲</a> |
+      <a href="/?sort=title&direction=desc">Title ▼</a> |
+      <a href="/?sort=author&direction=asc">Author ▲</a> |
+      <a href="/?sort=author&direction=desc">Author ▼</a>
+    </p>
+
+    {% if books %}
+      {% for book in books %}
+        <h3>{{ book.title }}</h3>
+        <p>by {{ book.author.name }}</p>
+        <p>ISBN: {{ book.isbn }}</p>
+
+        <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST">
+          <button type="submit">Delete</button>
+        </form>
+
+        <hr>
+      {% endfor %}
+    {% else %}
+      <p>No books found.</p>
+    {% endif %}
+
+    <p>
+      <a href="{{ url_for('add_author') }}">Add Author</a> |
+      <a href="{{ url_for('add_book') }}">Add Book</a>
+    </p>
+
+  </body>
+</html>

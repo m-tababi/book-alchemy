@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Add Author</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+
+    <h1>Add a new author</h1>
+
+    {% if error_message %}
+      <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if success_message %}
+      <p style="color: green;">{{ success_message }}</p>
+    {% endif %}
+
+    <form action="/add_author" method="POST">
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name" required><br><br>
+
+      <label for="birth_date">Birth date:</label><br>
+      <input type="date" id="birth_date" name="birth_date" required><br><br>
+
+      <label for="date_of_death">Date of death (optional):</label><br>
+      <input type="date" id="date_of_death" name="date_of_death"><br><br>
+
+      <button type="submit">Add author</button>
+    </form>
+
+    <p>
+      <a href="{{ url_for('home_page') }}">Back to home</a>
+    </p>
+
+  </body>
+</html>
